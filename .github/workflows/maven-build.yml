@@ -1,0 +1,25 @@
+name: Build and Test Java Application with Maven
+
+on:
+   push:
+       branches:["main","master"]
+   pull_requests:
+       branches:["main","master"]
+
+
+jobs:
+    builds:
+      runs-on:ubuntu-latest
+
+      steps: 
+      -name: Build with Maven
+      run: mvn -B clean package --file pom.xml
+
+      -name: Run tests
+      run: mvn test
+
+      -name:upload build artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name:calculator-app
+        path:target/*.jar       
